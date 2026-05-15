@@ -1,0 +1,41 @@
+cd /tmp/academycp-lab-11-publish
+
+rtk git switch fix
+rtk git status --short
+
+rtk npm test
+
+rtk git add .
+rtk git commit -m "Update lab 11"
+
+rtk git push origin fix
+
+rtk node -e "const r=await fetch('https://api.github.com/repos/YanPanYAP/lab-11/actions/runs?per_page=5'); const j=await r.json(); for (const run of j.workflow_runs) console.log([run.run_number, run.event, run.head_branch, run.status, run.conclusion, run.html_url].join(' | '));"
+
+gh pr create \
+  --repo YanPanYAP/lab-11 \
+  --base dev \
+  --head fix \
+  --title "Fix branch CI check" \
+  --body "fix -> dev"
+
+gh pr checks fix --repo YanPanYAP/lab-11 --watch
+gh pr merge fix --repo YanPanYAP/lab-11 --merge
+
+rtk git fetch origin
+rtk git switch dev
+rtk git pull --ff-only origin dev
+
+gh pr create \
+  --repo YanPanYAP/lab-11 \
+  --base main \
+  --head dev \
+  --title "Merge dev to main" \
+  --body "dev -> main"
+
+gh pr checks dev --repo YanPanYAP/lab-11 --watch
+gh pr merge dev --repo YanPanYAP/lab-11 --merge
+
+rtk node -e "const r=await fetch('https://api.github.com/repos/YanPanYAP/lab-11/actions/runs?per_page=5'); const j=await r.json(); for (const run of j.workflow_runs) console.log([run.run_number, run.event, run.head_branch, run.status, run.conclusion, run.html_url].join(' | '));"
+
+rtk curl -I https://yanpanyap.github.io/lab-11/
