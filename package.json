@@ -1,0 +1,11 @@
+{
+  "name": "academy-lab-11",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "devDependencies": {
+    "selenium-webdriver": "^4.32.0"
+  }
+}
