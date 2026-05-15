@@ -1,0 +1,12 @@
+cd /tmp/academycp-lab-11-publish
+
+rtk git branch
+rtk git switch fix
+
+cp "/Users/yanpaulovich/Documents/prog/academyCP/lab 11/lab11.txt" /tmp/academycp-lab-11-publish/lab11.txt
+
+rtk git add .
+rtk git commit -m "new"
+
+rtk git push origin fix
+rtk node -e "const r=await fetch('https://api.github.com/repos/YanPanYAP/lab-11/actions/runs?per_page=3'); const j=await r.json(); for (const run of j.workflow_runs) console.log([run.run_number, run.head_branch, run.status, run.conclusion, run.html_url].join(' | '));"
