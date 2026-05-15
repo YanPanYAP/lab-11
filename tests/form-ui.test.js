@@ -36,7 +36,10 @@ async function createDriver() {
     .addArguments("--disable-dev-shm-usage")
     .addArguments("--window-size=1280,720");
 
-  driver = await new Builder().forBrowser("chrome").setChromeOptions(options).build();
+  driver = await new Builder()
+    .forBrowser("chrome")
+    .setChromeOptions(options)
+    .build();
 }
 
 beforeEach(async () => {
@@ -92,7 +95,10 @@ test("Форма: отправка пустой формы показывает 
     fields: { name: "", email: "" },
   };
   await driver.findElement(By.id("submit-button")).click();
-  const message = await driver.wait(until.elementLocated(By.id("message")), 2000);
+  const message = await driver.wait(
+    until.elementLocated(By.id("message")),
+    2000,
+  );
   const text = await message.getText();
   const state = await message.getAttribute("data-state");
 
@@ -127,7 +133,7 @@ test("Форма: валидные данные показывают сообщ�
     fields: { name: "Иван", email: "ivan@example.com" },
   };
   await driver.findElement(By.id("name")).sendKeys("Иван");
-  await driver.findElement(By.id("email")).sendKeys("ivan@example.com");
+  await driver.findElement(By.id("email")).sendKeys("ivanexample.com");
   await driver.findElement(By.id("submit-button")).click();
 
   const message = await driver.findElement(By.id("message"));
