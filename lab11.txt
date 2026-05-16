@@ -14,7 +14,7 @@ rtk git reset --hard origin/dev
 rtk npm test
 
 rtk git add .
-rtk git commit -m "Repeat CI CD check"
+rtk git commit -m "new test"
 rtk git push --force-with-lease origin fix
 
 rtk node -e "const r=await fetch('https://api.github.com/repos/YanPanYAP/lab-11/actions/runs?per_page=5'); const j=await r.json(); for (const run of j.workflow_runs) console.log([run.run_number, run.event, run.head_branch, run.status, run.conclusion, run.html_url].join(' | '));"
